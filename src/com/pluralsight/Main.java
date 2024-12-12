@@ -14,6 +14,45 @@ public class Main {
             handleCommandLine(args);
         else System.out.println("Please provide an operation code and 2 numeric values");
 
+        Divider divider = new Divider();
+        doCalculation(divider, 100.0d, 50.0d);
+
+        Adder adder = new Adder();
+        doCalculation(adder, 25.0d, 92.0d);
+
+        performMoreCalculations();
+
+        System.out.println(Direction.valueOf("NORTH"));
+//        Direction.valueOf("N");
+        System.out.println(Direction.NORTH.name());
+        System.out.println(Direction.NORTH.toString());
+        System.out.println(Direction.NORTH.getShortCode());
+
+    }
+
+    private static void performMoreCalculations() {
+        CalculateBase[] calculations = {
+                new Divider(100.0d, 50.0d),
+                new Adder(25.0d, 92.0d),
+                new Subtracter(225.0d, 17.0d),
+                new Multiplier(11.0d, 3.0d)
+        };
+
+
+        System.out.println();
+        System.out.println("Array Calculations");
+
+        for(CalculateBase calculation : calculations) {
+            calculation.calculate();
+            System.out.println("result = " + calculation.getResult());
+        }
+    }
+
+    static void doCalculation(CalculateBase calculation, double leftVal, double rightVal) {
+        calculation.setLeftVal(leftVal);
+        calculation.setRightVal(rightVal);
+        calculation.calculate();
+        System.out.println("Calculation result = " + calculation.getResult());
     }
 
     static void performCalculations() {
@@ -148,5 +187,22 @@ public class Main {
         }
         return value;
 
+    }
+
+    enum Direction {
+        EAST("E"),
+        WEST("W"),
+        NORTH("N"),
+        SOUTH("S");
+
+        private final String shortCode;
+
+        Direction(String code) {
+            this.shortCode = code;
+        }
+
+        public String getShortCode() {
+            return this.shortCode;
+        }
     }
 }
